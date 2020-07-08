@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
-    'accounts'
+    'accounts',
+    'lectures'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,34 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOWED_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = [
+'http://localhost:3001',
+'http://127.0.0.1:3001',
+]
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 ROOT_URLCONF = 'sjc_django.urls'
 
@@ -76,6 +105,17 @@ WSGI_APPLICATION = 'sjc_django.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+# DATABASES = {
+#     'default' : {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'sjc_database',
+#         'USER': 'root',
+#         'PASSWORD': 'wjdtn011!',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 DATABASES = {
     'default': {

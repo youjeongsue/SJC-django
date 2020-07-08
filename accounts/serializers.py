@@ -1,17 +1,20 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model, authenticate
-User = get_user_model()
+from django.contrib.auth import authenticate
+from .models import User
 
-#회원가입 serailizer
+#교수-회원가입 serailizer
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "password")
+        fields = ("id", "username", "email", "password", "is_staff")
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            validated_data["username"], None, validated_data["password"]
+            validated_data["username"],
+            validated_data["email"],
+            validated_data["password"],
+            validated_data["is_staff"]
         )
         return user
 
@@ -19,7 +22,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username")
+        fields = ("id", "email", "username", "is_staff")
 
 #로그인 serializer
 class LoginUserSerializer(serializers.Serializer):
@@ -28,6 +31,6 @@ class LoginUserSerializer(serializers.Serializer):
 
     def validate(self, data):
         user = authenticate(**data)
-        if user:
+        if user and user.is_active:
             return user
         raise serializers.ValidationError("Unable to login with provided credentials.")
