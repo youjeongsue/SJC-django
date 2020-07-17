@@ -39,12 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'knox',
     'accounts',
     'lectures'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,8 +60,8 @@ CORS_ORIGIN_ALLOWED_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = [
-'http://localhost:3001',
-'http://127.0.0.1:3001',
+'http://localhost:3000',
+'http://127.0.0.1:3000',
 ]
 
 CORS_ALLOW_METHODS = (
@@ -168,4 +170,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
