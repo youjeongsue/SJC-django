@@ -12,7 +12,7 @@ class Assignment(models.Model):
     assignmentname = models.CharField(max_length=100)
     lecture = models.ForeignKey(Lecture, related_name="assignments", on_delete=models.CASCADE)
     professor_video = models.FileField(blank=True)
-    student_video = models.ManyToManyField('Student_video', related_name="student_videos", on_delete=models.CASCADE, blank=True)
+    student_video = models.ManyToManyField('Student_video', related_name="student_videos", blank=True)
 
     def __str__(self):
         return self.assignmentname
@@ -24,10 +24,10 @@ class Student_video(models.Model):
     def __str__(self):
         return self.student_video.name
 
-class Comment(models.Model):
+class Comment(models.Model): 
     assignment = models.ForeignKey(Assignment, related_name="comments", on_delete=models.CASCADE)
     contents = models.CharField(max_length=300)
-    timestamp = models.TimeField()
+    timestamp = models.TimeField(blank=True)
 
     def __str__(self):
         return self.assignment
