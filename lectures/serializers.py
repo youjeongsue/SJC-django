@@ -4,7 +4,7 @@ from .models import Lecture, Assignment, Student_video, Comment
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
-        fields = ['id','lecturename','professor','students']
+        fields = ['id','lecturename','image','professor','students']
 
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:

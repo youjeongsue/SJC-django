@@ -2,6 +2,7 @@ from django.db import models
 
 class Lecture(models.Model):
     lecturename = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images', blank=True)
     professor = models.ForeignKey('accounts.User', related_name="professor_id", on_delete=models.CASCADE, blank=True)
     students = models.ManyToManyField('accounts.User', related_name="student_id", blank=True)
 
