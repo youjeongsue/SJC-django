@@ -11,12 +11,25 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+
+#Google Cloud Storage
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    "bucket-admin.json"
+)
+DEFAULT_FILE_STORAGE = 'config.storage_backends.GoogleCloudMediaStorage'
+STATICFILES_STORAGE = 'config.storage_backends.GoogleCloudStaticStorage'
+GS_PROJECT_ID = 'my-project-1544004945326'
+GS_MEDIA_BUCKET_NAME = '1ok_demo'
+GS_STATIC_BUCKET_NAME = '1ok_static'
+STATIC_URL = 'https://storage.googleapis.com/{}/'.format(GS_STATIC_BUCKET_NAME)
+MEDIA_URL = 'https://storage.googleapis.com/{}/'.format(GS_MEDIA_BUCKET_NAME)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -27,7 +40,7 @@ SECRET_KEY = 'ynday6k3x0pcfrzfkak*^e=(c^@=t#*%2by7d74)n5+ots2y#l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

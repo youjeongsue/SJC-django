@@ -4,10 +4,12 @@ from rest_framework.response import Response
 from .serializers import (
     LectureSerializer,
     AssignmentSerializer,
-    CommentSerializer
+    ProfessorImageSerializer,
+    StudentVideoSerializer,
+    StudentImageSerializer,
 )
 from .permissions import IsOwnerOrReadOnly
-from .models import Lecture, Assignment, Comment
+from .models import Lecture, Assignment, ProfessorImage, StudentVideo, StudentImage
 from django.http.response import JsonResponse
 
 #Lecture
@@ -43,15 +45,39 @@ class AssignmentDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = AssignmentSerializer
 
-#Comment
-class CommentList(generics.ListCreateAPIView):
+#professor image
+class ProfessorImageList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = CommentSerializer
+    serializer_class = ProfessorImageSerializer
+    
+    def get_queryset(self, **kwargs):
+        return ProfessorImage.objects.filter(assignment=self.kwargs['assignment'])
+
+class ProfessorImageDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ProfessorImage.objects.all()
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = ProfessorImageSerializer
+
+#student video
+#svideo list/get 아직은 필요없음
+class StudentVideoList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = StudentVideoSerializer
+        
+class StudentVideoDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StudentVideo.objects.all()
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = StudentVideoSerializer
+
+#student image
+class StudentImageList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated, )
+    serializer_class = StudentImageSerializer
 
     def get_queryset(self, **kwargs):
-        return Comment.objects.filter(assignment=self.kwargs['assignment'])
+        return StudentImage.objects.filter(student_video=self.kwargs['student_video'])
         
-class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Comment.objects.all()
+class StudentImageDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = StudentImage.objects.all()
     permission_classes = (permissions.IsAuthenticated, )
-    serializer_class = CommentSerializer
+    serializer_class = StudentImageSerializer

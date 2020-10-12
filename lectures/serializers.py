@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Lecture, Assignment, Student_video, Comment
+from .models import Lecture, Assignment, ProfessorImage, StudentVideo, StudentImage
 
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,14 +9,19 @@ class LectureSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
-        fields = ['id', 'assignmentname', 'lecture', 'professor_video', 'student_video']
+        fields = ['id', 'assignmentname', 'score', 'lecture', 'p_video']
+
+class ProfessorImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfessorImage
+        fields = ['id', 'assignment', 'p_image']
 
 class StudentVideoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Student_video
-        fields = ['id', 'student', 'student_video']
+        model = StudentVideo
+        fields = ['id', 'student', 'assignment', 's_video']
 
-class CommentSerializer(serializers.ModelSerializer):
+class StudentImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comment
-        fields = ['id', 'assignment', 'contents', 'timestamp']
+        model = StudentImage
+        fields = ['id', 'student_video', 's_image_path', 'comment']
