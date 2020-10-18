@@ -4,7 +4,8 @@ from knox.views import LogoutView
 from .views import (
     RegistrationAPI,
     LoginAPI,
-    UserAPI
+    UserAPI,
+    GetUser
 )
 
 urlpatterns = [
@@ -13,6 +14,7 @@ urlpatterns = [
     path("auth/login/", LoginAPI.as_view()),
     path("auth/logout/", LogoutView.as_view()),
     path("auth/user/", UserAPI.as_view()),
+    path("auth/user/<int:pk>/", GetUser.as_view())
 
     #Student
 ]

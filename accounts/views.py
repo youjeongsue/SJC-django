@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions, generics, status
 
 from rest_framework.response import Response
+from .models import User
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
@@ -50,3 +51,9 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+class GetUser(generics.ListAPIView):
+    serializer_class = UserSerializer
+    
+    def get_queryset(self, **kwargs):
+        return User.objects.filter(id=self.kwargs['pk'])

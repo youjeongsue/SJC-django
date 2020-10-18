@@ -63,6 +63,9 @@ class ProfessorImageDetail(generics.RetrieveUpdateDestroyAPIView):
 class StudentVideoList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = StudentVideoSerializer
+
+    def get_queryset(self, **kwargs):
+        return StudentVideo.objects.filter(assignment=self.kwargs['assignment'])
         
 class StudentVideoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = StudentVideo.objects.all()
